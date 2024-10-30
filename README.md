@@ -1,8 +1,8 @@
-This repository aims to facilitate the automatic creation of bags for both, ROS1 and ROS2, of sequences of the SceneNN dataset.
+This repository aims to facilitate the automatic creation of bags for both, ROS1 and ROS2, of sequences of the [SceneNN](https://hkust-vgd.github.io/scenenn/) dataset. Preview of the available sequences [here](https://hkust-vgd.ust.hk/scenenn/home/webgl/).
 
 # Requeriments
 
-It requires the rosbags-convert[https://pypi.org/project/rosbags/] package in order to convert from ROS1 to ROS2 bags. To install it:
+It requires the [rosbags-convert](https://pypi.org/project/rosbags/) package in order to convert from ROS1 to ROS2 bags. To install it:
 
 ```
 pip install rosbags
