@@ -7,7 +7,7 @@ from rosbags.typesys.stores.ros1_noetic import (
     geometry_msgs__msg__PoseWithCovarianceStamped as PoseWithCovarianceStamped,
     geometry_msgs__msg__PoseWithCovariance as PoseWithCovariance,
     geometry_msgs__msg__Pose as Pose,
-    geometry_msgs__msg__Quaternion as QuaternionROS1,
+    geometry_msgs__msg__Quaternion as Quaternion,
     geometry_msgs__msg__Point as Point
 )
 
@@ -52,13 +52,18 @@ class GenerateRosbag(object):
         return cam_info_msg
 
     def create_pose_msg(self, pose, header):
+        header.frame_id = "map"
+
+        q = np.array([pose[0], pose[1], pose[2], pose[3]], dtype=np.float64)
+        if np.linalg.norm(q) > 1.02 or np.linalg.norm(q) < 0.98:
+            q /= np.linalg.norm(q)
 
         pose_msg = PoseWithCovarianceStamped(
             header=header,
             pose=PoseWithCovariance(
                 pose = Pose(
                     position = Point(x = pose[4], y = pose[5], z = pose[6]),
-                    orientation = QuaternionROS1(x = pose[0], y = pose[1], z = pose[2], w = pose[3])
+                    orientation = Quaternion(x = q[0], y = q[1], z = q[2], w = q[3])
                 ),
                 covariance = np.array(36 * [0.], dtype=np.float64)
             )
