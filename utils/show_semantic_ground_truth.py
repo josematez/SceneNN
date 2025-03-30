@@ -64,8 +64,10 @@ if __name__ == "__main__":
     plt.ylim(y_min - margin, y_max + margin)
     plt.xlabel("X coordinate")
     plt.ylabel("Y coordinate")
-    plt.title(f"Visualization of the map for {args.input_path}")
+    plt.title(f"Visualization of the map for \n{args.input_path}")
     plt.grid(True)
     plt.tight_layout()
     plt.savefig(args.output_path)
     plt.show()
+
+    print(f"Visualization saved to {args.output_path}")
