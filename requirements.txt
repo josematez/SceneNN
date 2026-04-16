@@ -4,3 +4,4 @@ opencv-python==4.11.0.86
 pypng==0.20220715.0
 rosbags==0.10.7
 matplotlib==3.10.1
+numpy<2.0
