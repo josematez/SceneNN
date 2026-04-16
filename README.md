@@ -1,4 +1,4 @@
-This repository aims to facilitate the automatic creation of bags for both, ROS1 and ROS2, of sequences of the [SceneNN](https://hkust-vgd.github.io/scenenn/) dataset. Preview of the available sequences [here](https://hkust-vgd.ust.hk/scenenn/home/webgl/).
+This repository aims to facilitate the automatic creation of bags for both, ROS1 and ROS2, of sequences of the [SceneNN](https://hkust-vgd.github.io/scenenn/) dataset. Preview of the available sequences [here](https://hkust-vgd.ust.hk/scenenn/home/webgl/). 
 
 # Requeriments
 
