@@ -20,7 +20,7 @@ scene_id=$(printf "%03d" "$scene_id")
 THIS_FILE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 RAW_DATA_DIR="$THIS_FILE_DIR/raw_data/"
 EVALUATION_DIR="$THIS_FILE_DIR/evaluation/"
-PLAYBACK_DIR="$THIS_FILE_DIR/utils/playback/playback"
+PLAYBACK_DIR="$THIS_FILE_DIR/utils/playback"
 
 SCENENN_URL="https://hkust-vgd.ust.hk/scenenn/main"
 SCENENN_CONTRIB_URL="https://hkust-vgd.ust.hk/scenenn/contrib"
@@ -52,9 +52,15 @@ if [ "$EVALUATION_ONLY" = false ]; then
 
     mkdir -p "images"
 
-    echo "Extracting RGB-D images..."
-    $PLAYBACK_DIR "$RAW_DATA_DIR/$scene_id/$scene_id.oni" "$RAW_DATA_DIR/$scene_id/images/"
 
+    cd $PLAYBACK_DIR
+    echo "Building playback executable..."
+    make
+
+    echo "Extracting RGB-D images..."
+    ./playback "$RAW_DATA_DIR/$scene_id/$scene_id.oni" "$RAW_DATA_DIR/$scene_id/images/"
+
+    cd "$RAW_DATA_DIR/$scene_id/"
     mkdir -p "intrinsics"
 
     cd "$RAW_DATA_DIR/$scene_id/intrinsics/" || exit

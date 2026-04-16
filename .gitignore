@@ -1,3 +1,4 @@
+.vscode
 **/__pycache__/
 
 # Ignore dataset downloaded/generated files
@@ -20,4 +21,8 @@
 # Virtual environments
 .venv/
 env
-.vscode
+
+# binaries and build artifacts
+utils/playback/playback
+utils/playback/PlaybackSync.o
+**/compile_commands.json
