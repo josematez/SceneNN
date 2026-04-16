@@ -5,11 +5,10 @@
 #include <iostream>
 #include <cmath>
 
-#include <vector>
 #include <string>
-#include <algorithm>
 #include <iostream>
 #include <cstdio>
+#include <chrono>
 
 #ifndef WIN32
 #include <boost/filesystem.hpp>
@@ -87,6 +86,7 @@ int main(int argc, char* argv[])
 		cout << "Usage: " << argv[0] << "  <file>  <output folder>" << endl;
 		return 0;
 	}
+  auto start = std::chrono::system_clock::now();
   string input_file = argv[1];
   string dir = argv[2];
 
@@ -208,8 +208,19 @@ int main(int argc, char* argv[])
             sprintf(colorFilename, "%s/image/image%05d.png", dir.c_str(), k);
             sprintf(depthFilename, "%s/depth/depth%05d.png", dir.c_str(), k);
 
-            FreeImage_Save(FIF_PNG, colorBitmap, colorFilename);
-            FreeImage_Save(FIF_PNG, depthBitmap, depthFilename);
+            int compressionFlags = PNG_Z_BEST_SPEED; // you can change this for better speed at the cost of slightly larger file size
+            #pragma omp parallel sections
+            {
+                #pragma omp section
+                { 
+                    FreeImage_Save(FIF_PNG, colorBitmap, colorFilename, compressionFlags);
+                }
+
+                #pragma omp section
+                { 
+                    FreeImage_Save(FIF_PNG, depthBitmap, depthFilename, compressionFlags);
+                }
+            }
 
             // TODO: remove timestamp from filename, and store into a text file. 
             // Format: frame ID - color timestamp - depth timestamp
@@ -222,7 +233,9 @@ int main(int argc, char* argv[])
 	fclose(file_timestamp);
 
     // TODO: archive everything into a zero-compression zip file
+    auto ellapsed = std::chrono::system_clock::now() - start;
 
+    printf("Ellapsed in playback: %fs\n", ellapsed.count() * 1e-9);
 
     return 0;
 }
